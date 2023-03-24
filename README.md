@@ -11,4 +11,4 @@ b) - The Bank of The Future Me.
   There is one thing, but every day THE COUNTER WILL BE SET TO ZERO and all the TIME that you did NOT PLAN will BURN. That is, you have planned things for 100 y.o. let's say 1300 y.o. , 100 y.o. - will be transferred to The Bank of The Future Me, and 1300 y.o. will just take and burn, similarly, everything happens in real life, the time that we waste is simply lost, once and for all, and there remains only the one in which we were really busy. 
   The Bank of The Future Me, what is it? What we can get for our y.o. About this and more, you can find out by downloading the PrioritizeMyFuture application. We are waiting for you! Appreciate the time, because it is one of the most valuable resources that everyone has.
  # Class Diagram 
- ![class-diagram](~/../ProductiveApp.png)
+ ![ProductiveApp](~/../ProductiveApp.png)
