@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:OOP_course_work"
+             x:Class="OOP_course_work.TaskPage"
+             Title="Add Task">
+
+    <StackLayout Margin="20">
+        <Label Text="Task Name"/>
+        <Entry x:Name="TaskNameEntry" Placeholder="Enter task name"/>
+        <Label Text="Task Time (in minutes)"/>
+        <Entry x:Name="TaskTimeEntry" Placeholder="Enter task time"/>
+        <Label Text="Hashtag"/>
+        <Entry x:Name="HashtagEntry" Placeholder="Enter hashtag"/>
+        <Button Text="Add Task" Clicked="OnAddTaskClicked"/>
+    </StackLayout>
+
+</ContentPage>
