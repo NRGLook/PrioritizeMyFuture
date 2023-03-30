@@ -20,7 +20,7 @@
                 </DataTemplate>
             </ListView.ItemTemplate>
         </ListView>
-        <Button Text="Add Task" Clicked="OnAddTaskClicked"/>
+        <Button Text="Add Task" Clicked="AddTaskButton_Clicked"/>
     </StackLayout>
 
 </ContentPage>

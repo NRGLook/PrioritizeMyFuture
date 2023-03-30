@@ -12,7 +12,7 @@
         <Entry x:Name="TaskTimeEntry" Placeholder="Enter task time"/>
         <Label Text="Hashtag"/>
         <Entry x:Name="HashtagEntry" Placeholder="Enter hashtag"/>
-        <Button Text="Add Task" Clicked="OnAddTaskClicked"/>
+        <Button Text="Add Task" Clicked="AddTaskButton_Clicked"/>
     </StackLayout>
 
 </ContentPage>

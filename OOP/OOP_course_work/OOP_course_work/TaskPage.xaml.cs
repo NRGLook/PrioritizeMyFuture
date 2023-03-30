@@ -9,45 +9,48 @@ namespace OOP_course_work
 
         public class Bank
         {
+            private int _totalTime;
             private List<Task> _tasks;
 
-            public Bank()
+            public Bank(int defaultTime)
             {
+                _totalTime = defaultTime;
                 _tasks = new List<Task>();
             }
 
             public void AddTask(Task task)
             {
                 _tasks.Add(task);
+                _totalTime -= task.Time;
             }
 
-            public void RemoveTask(Task task)
+            public int GetTotalTime()
             {
-                _tasks.Remove(task);
-            }
-
-            public List<Task> GetAllTasks()
-            {
-                return _tasks;
-            }
-
-            public void Clear()
-            {
-                _tasks.Clear();
+                return _totalTime;
             }
         }
+
+        public class Task
+        {
+            public string Name { get; set; }
+            public int Time { get; set; }
+            public string Hashtag { get; set; }
+
+            public Task(string name, int time, string hashtag)
+            {
+                Name = name;
+                Time = time;
+                Hashtag = hashtag;
+            }
+        }
+
         public TaskPage(Bank bankOfToday)
         {
             InitializeComponent();
-
             _bankOfToday = bankOfToday;
         }
 
-        public TaskPage()
-        {
-        }
-
-        private async void OnAddTaskClicked(object sender, EventArgs e)
+        private async void AddTaskButton_Clicked(object sender, EventArgs e)
         {
             if (string.IsNullOrWhiteSpace(TaskNameEntry.Text) || string.IsNullOrWhiteSpace(TaskTimeEntry.Text))
             {
@@ -62,9 +65,8 @@ namespace OOP_course_work
                 return;
             }
 
-       //     var task = new Task(TaskNameEntry.Text, taskTime, HashtagEntry.Text, "");
-
-     //       _bankOfToday.AddTask(task);
+            var task = new Task(TaskNameEntry.Text, taskTime, HashtagEntry.Text);
+            _bankOfToday.AddTask(task);
 
             await Navigation.PopAsync();
         }

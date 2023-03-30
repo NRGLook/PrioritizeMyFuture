@@ -29,13 +29,13 @@
     <AppXManifest Include="D:\GitRep\OOP\OOP_course_work\OOP_course_work\bin\Debug\net7.0-windows10.0.19041.0\win10-x64\AppxManifest.xml">
       <PackagePath>AppxManifest.xml</PackagePath>
       <ReRegisterAppIfChanged>true</ReRegisterAppIfChanged>
-      <Modified>2023-03-30T13:20:26.125</Modified>
+      <Modified>2023-03-30T13:39:28.284</Modified>
     </AppXManifest>
   </ItemGroup>
   <ItemGroup>
     <AppxPackagedFile Include="D:\GitRep\OOP\OOP_course_work\OOP_course_work\bin\Debug\net7.0-windows10.0.19041.0\win10-x64\resources.pri">
       <PackagePath>resources.pri</PackagePath>
-      <Modified>2023-03-30T13:20:25.759</Modified>
+      <Modified>2023-03-30T13:39:27.634</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\GitRep\OOP\OOP_course_work\OOP_course_work\bin\Debug\net7.0-windows10.0.19041.0\win10-x64\OOP_course_work.runtimeconfig.json">
       <PackagePath>OOP_course_work.runtimeconfig.json</PackagePath>
@@ -43,11 +43,11 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\GitRep\OOP\OOP_course_work\OOP_course_work\bin\Debug\net7.0-windows10.0.19041.0\win10-x64\OOP_course_work.dll">
       <PackagePath>OOP_course_work.dll</PackagePath>
-      <Modified>2023-03-30T13:20:24.174</Modified>
+      <Modified>2023-03-30T13:39:26.634</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\GitRep\OOP\OOP_course_work\OOP_course_work\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\apphost.exe">
       <PackagePath>OOP_course_work.exe</PackagePath>
-      <Modified>2023-03-30T13:20:24.204</Modified>
+      <Modified>2023-03-30T13:39:26.682</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Users\ilyat\.nuget\packages\microsoft.netcore.app.runtime.win-x64\7.0.2\runtimes\win-x64\lib\net7.0\Microsoft.CSharp.dll">
       <PackagePath>Microsoft.CSharp.dll</PackagePath>
@@ -919,7 +919,7 @@
     </AppxPackagedFile>
     <AppxPackagedFile Include="D:\GitRep\OOP\OOP_course_work\OOP_course_work\obj\Debug\net7.0-windows10.0.19041.0\win10-x64\OOP_course_work.deps.json">
       <PackagePath>OOP_course_work.deps.json</PackagePath>
-      <Modified>2023-03-30T13:20:25.978</Modified>
+      <Modified>2023-03-30T13:39:28.113</Modified>
     </AppxPackagedFile>
     <AppxPackagedFile Include="C:\Program Files\dotnet\packs\Microsoft.Maui.Controls.Ref.win\7.0.52\ref\net7.0-windows10.0.19041\Microsoft.Maui.Controls.Compatibility.pri">
       <PackagePath>Microsoft.Maui.Controls.Compatibility.pri</PackagePath>

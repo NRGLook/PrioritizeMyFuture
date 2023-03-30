@@ -1,99 +1,29 @@
-﻿using System.Runtime.CompilerServices;
+﻿using System;
+using Microsoft.Maui.Controls;
+using System.Collections.Generic;
 
 namespace OOP_course_work
 {
     public partial class MainPage : ContentPage
     {
-        private double _bankOfToday = 1440;
-        private double _bankOfTheFutureMe = 0;
-
-        public class Bank
-        {
-            private List<Task> _tasks;
-
-            public Bank()
-            {
-                _tasks = new List<Task>();
-            }
-
-            public void AddTask(Task task)
-            {
-                _tasks.Add(task);
-            }
-
-            public void RemoveTask(Task task)
-            {
-                _tasks.Remove(task);
-            }
-
-            public List<Task> GetAllTasks()
-            {
-                return _tasks;
-            }
-
-            public void Clear()
-            {
-                _tasks.Clear();
-            }
-        }
-        public double BankOfToday
-        {
-            get { return _bankOfToday; }
-            set { SetProperty(ref _bankOfToday, value); }
-        }
-
-        public double BankOfTheFutureMe
-        {
-            get { return _bankOfTheFutureMe; }
-            set { SetProperty(ref _bankOfTheFutureMe, value); }
-        }
+        private TaskPage.Bank _bankOfToday;
 
         public MainPage()
         {
             InitializeComponent();
-            UpdateBankOfToday();
-            var addTaskButton = new Button
-            {
-                Text = "Add Task",
-                AutomationId = "addTaskButton"
-            };
-
-            addTaskButton.Clicked += async (sender, e) =>
-            {
-                await Navigation.PushAsync(new TaskPage());
-            };
-
-
-            Content = new StackLayout
-            {
-                Children = { addTaskButton }
-            };
+            _bankOfToday = new TaskPage.Bank(1440);
         }
 
-        private void UpdateBankOfToday()
+
+        protected override void OnAppearing()
         {
-            BankOfToday = _bankOfToday;
+            base.OnAppearing();
         }
 
-        private void AddTask_Clicked(object sender, EventArgs e)
+        private async void AddTaskButton_Clicked(object sender, EventArgs e)
         {
-            // TODO: Implement task adding functionality
-        }
-        protected bool SetProperty<T>(ref T backingStore, T value, [CallerMemberName] string propertyName = "", Action onChanged = null)
-        {
-            if (EqualityComparer<T>.Default.Equals(backingStore, value))
-                return false;
-
-            backingStore = value;
-            onChanged?.Invoke();
-            OnPropertyChanged(propertyName);
-
-            return true;
+            await Navigation.PushAsync(new TaskPage(_bankOfToday));
         }
 
-        private void OnAddTaskClicked(object sender, EventArgs e)
-        {
-
-        }
     }
 }
