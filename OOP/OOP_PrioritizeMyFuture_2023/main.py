@@ -1,7 +1,7 @@
 from src.User import User, RegistrationUser
 
 a = RegistrationUser()
-a.add_task("hello")
+a.add_task(self="hello")
 
 """
 # validate user login
