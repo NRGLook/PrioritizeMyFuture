@@ -1,36 +1,27 @@
 class Bank:
-    def __int__(self, volume, name, date_of_create):
+    def __init__(self):
+        self.volume = 0
+        self.styles = []
+        self.name = ""
+        self.y_o = 0
+
+    def set_volume(self, volume):
         self.volume = volume
+
+    def set_styles(self, styles):
+        self.styles = styles
+
+    def change_styles(self, styles):
+        self.styles += styles
+
+    def set_name(self, name):
         self.name = name
-        self.date_of_create = date_of_create
 
-    def set_volume(self):
-        pass
+    def set_y_o(self, y_o):
+        self.y_o = y_o
 
-    def set_styles(self):
-        pass
-
-    def change_styles(self):
-        pass
-
-    def set_name(self):
-        pass
-
-    def set_y_o(self):
-        pass
-
-    def change_y_o(self):
-        pass
+    def change_y_o(self, y_o):
+        self.y_o += y_o
 
     def get_y_o(self):
-        pass
-
-
-class BankToday(Bank):
-    def __int__(self):
-        pass
-
-
-class BankFuture(Bank):
-    def __int__(self):
-        pass
+        return self.y_o
