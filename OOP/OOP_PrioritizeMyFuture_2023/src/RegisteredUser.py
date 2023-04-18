@@ -1,5 +1,5 @@
-from User import User
 from TodayBank import TodayBank
+from User import User
 
 
 class RegisteredUser(User):
@@ -7,6 +7,7 @@ class RegisteredUser(User):
         super().__init__()
         self.tasks = []
         self.bank = TodayBank()
+        print("Hello World - new user!")
 
     def add_task(self, task):
         task.set_name(input("Enter task name: "))
