@@ -1,7 +1,11 @@
-from src.User import User
+from src.User import User, RegisteredUser
+
 
 if __name__ == "__main__":
     user = User()
+    user.registration()
+
+
 
 
 

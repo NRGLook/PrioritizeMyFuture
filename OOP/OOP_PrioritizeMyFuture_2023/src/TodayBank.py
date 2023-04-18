@@ -1,4 +1,4 @@
-from Bank import Bank
+from src.Bank import Bank
 
 
 class TodayBank(Bank):

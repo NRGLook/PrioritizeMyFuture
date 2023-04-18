@@ -1,4 +1,5 @@
 from var.Constants import StatusTasks
+import json
 
 
 class Task:
@@ -7,6 +8,7 @@ class Task:
         self.name = ""
         self.status = ""
         self.category = ""
+        print("Hello World")
 
     def set_cost_name(self, cost_name):
         self.cost_name = cost_name

@@ -1,29 +1,32 @@
-import var.Constants
 import sqlite3
+import sys
+import var.Constants
+
 from passlib.hash import pbkdf2_sha256
-from src.RegisteredUser import RegisteredUser
+from src.TodayBank import TodayBank
+from src.Task import Task
 
 
 class User:
+
     def __init__(self):
         self.username = ""
         self.password = ""
-        self.login_status = False
-        # Подключаемся к базе данных
+
+    def registration(self):
+
+        print("Welcome to the app that will help you manage your time and stop wasting it!")
         conn = sqlite3.connect('users.db')
         c = conn.cursor()
 
-        # Создаем таблицу пользователей, если ее еще нет
         c.execute('''CREATE TABLE IF NOT EXISTS users
                      (username TEXT PRIMARY KEY, password TEXT)''')
 
-        # Функция для проверки введенного пароля
         def verify_password(password, hashed):
             return pbkdf2_sha256.verify(password, hashed)
 
-        # Запрос у пользователя логина и пароля
-        username = input('Введите имя пользователя: ')
-        password = input('Введите пароль: ')
+        username = input('Enter username: ')
+        password = input('Enter password: ')
 
         # Получаем хэш пароля из базы данных для введенного имени пользователя
         c.execute('SELECT password FROM users WHERE username=?', (username,))
@@ -33,31 +36,91 @@ class User:
         if result:
             # Если пользователь уже существует, проверяем введенный пароль
             if verify_password(password, result[0]):
-                print('Авторизация прошла успешно!')
-                new_user = RegisteredUser()
+                print('Authorization is success!')
+                user = RegisteredUser()
             else:
-                print('Неправильный пароль')
+                print('Incorrect password! Try again!')
         else:
             # Если пользователь не существует, добавляем его в базу данных
             hashed_password = pbkdf2_sha256.hash(password)
             c.execute('INSERT INTO users VALUES (?, ?)', (username, hashed_password))
-            print('Регистрация прошла успешно!')
-            new_user = RegisteredUser()
+            print('Registration is success!')
+            user = RegisteredUser()
 
         # Сохраняем изменения и закрываем соединение с базой данных
         conn.commit()
         conn.close()
 
-"""
-    def registration(self):
-        self.username = input("Enter username: ")
-        self.password = input("Enter password: ")
 
-    def login(self, username, password):
-        if self.username == username and self.password == password:
-            self.login_status = True
-            return True
-        else:
-            return False
-"""
+class RegisteredUser(User):
+    def __init__(self):
+        self.tasks = []
+        self.bank = TodayBank()
+        self.response()
+        self.task = Task()
 
+    def response(self):
+        print(var.Constants.OPTIONS_TODO)
+        while True:
+            user_input = input('Choose command: ')
+            if user_input == '1':
+                self.add_task(self)
+            if user_input == '2':
+                self.remove_task(self)
+            if user_input == '3':
+                self.update_task(self)
+            if user_input == '4':
+                self.change_styles(self)
+            if user_input == '5':
+                self.set_name(self)
+            if user_input == '6':
+                self.set_y_o(self)
+            if user_input == '7':
+                self.get_y_o(self)
+            if user_input == '8':
+                self.burn_today(self)
+            if user_input == '9':
+                self.transfer_to_future(self)
+            if user_input == '10':
+                sys.exit()
+
+    def add_task(self, task):
+        task.set_name(input("Enter task name: "))
+        task.set_y_o(int(input("Enter task cost in minutes: ")))
+        task.set_category(input("Enter task category: "))
+        self.tasks.append(task)
+
+    def set_category(self, category):
+        self.task.set_category(category)
+        # self.tasks.set_category(category)
+
+    def remove_task(self, task):
+        task.set_name(input("Enter task that are you going to remove:  "))
+        self.tasks.remove(task)
+
+    def update_task(self, task, new_task):
+        index = self.tasks.index(task)
+        self.tasks[index] = new_task
+
+    def change_styles(self, styles):
+        self.bank.change_styles(styles)
+
+    def set_name(self, name):
+        self.bank.set_name(name)
+
+    def set_y_o(self, y_o):
+        self.bank.set_y_o(y_o)
+
+    def get_y_o(self):
+        return self.bank.get_y_o()
+
+    def burn_today(self):
+        y_o_burn = self.bank.volume - sum([task.cost_name for task in self.tasks])
+        self.bank.set_y_o(self.bank.y_o + y_o_burn)
+        self.bank.set_volume(1440)
+        self.tasks = []
+
+    def transfer_to_future(self):
+        y_o_transfer = sum([task.cost_name for task in self.tasks])
+        self.bank.change_y_o(y_o_transfer)
+        self.tasks = []
