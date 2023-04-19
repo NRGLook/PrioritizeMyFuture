@@ -1,9 +1,18 @@
-class Bank:
+import json
+from abc import ABC, abstractmethod
+
+
+class Bank(ABC):
     def __init__(self):
-        self.volume = 0
-        self.styles = []
+        self.volume = 1440
         self.name = ""
-        self.y_o = 0
+        self.list_of_tasks = {[{}, {}, {}], ...}
+
+    def add_list_of_tasks(self, task):
+        print("Hello its add method")
+        self.list_of_tasks.append(task)
+        with open("ilya.json", "w") as file:
+            json.dump(self.list_of_tasks, file)
 
     def set_volume(self, volume):
         self.volume = volume
@@ -25,3 +34,7 @@ class Bank:
 
     def get_y_o(self):
         return self.y_o
+
+    @abstractmethod
+    def calculate_interest(self):
+        pass

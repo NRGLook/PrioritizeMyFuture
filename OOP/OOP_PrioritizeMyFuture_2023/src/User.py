@@ -5,6 +5,7 @@ import var.Constants
 
 from passlib.hash import pbkdf2_sha256
 from src.TodayBank import TodayBank
+from src.BankFuture import BankFuture
 from src.Task import Task
 
 
@@ -29,7 +30,7 @@ class User:
 
         username = input('Enter username: ')
         password = input('Enter password: ')
-        data = [[]]
+        data = [{}]
 
         # Получаем хэш пароля из базы данных для введенного имени пользователя
         c.execute('SELECT password FROM users WHERE username=?', (username,))
@@ -61,17 +62,17 @@ class User:
 
 class RegisteredUser(User):
     def __init__(self):
-        self.tasks = []
-        self.bank = TodayBank()
-        self.response()
+        self.bank_today = TodayBank()
+        self.bank_future = BankFuture()
         self.task = Task()
+        self.response()
 
     def response(self):
         print(var.Constants.OPTIONS_TODO)
         while True:
             user_input = input('Choose command: ')
             if user_input == '1':
-                self.add_task(self)
+                self.add_task_title(self)
             if user_input == '2':
                 self.remove_task(self)
             if user_input == '3':
@@ -91,11 +92,11 @@ class RegisteredUser(User):
             if user_input == '10':
                 sys.exit()
 
-    def add_task(self, task):
-        task.set_name(input("Enter task name: "))
-        task.set_y_o(int(input("Enter task cost in minutes: ")))
-        task.set_category(input("Enter task category: "))
-        self.tasks.append(task)
+    def add_task_title(self, task):
+        self.task.set_name(input("Enter task name: "))
+        self.task.set_cost_name(int(input("Enter task cost in minutes: ")))
+        self.task.set_category(input("Enter task category: "))
+        self.bank_today.add_list_of_tasks(task)
 
     def set_category(self, category):
         self.task.set_category(category)
