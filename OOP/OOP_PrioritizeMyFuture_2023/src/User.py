@@ -1,3 +1,4 @@
+import json
 import sqlite3
 import sys
 import var.Constants
@@ -13,6 +14,7 @@ class User:
         self.username = ""
         self.password = ""
 
+    @staticmethod
     def registration(self):
 
         print("Welcome to the app that will help you manage your time and stop wasting it!")
@@ -27,6 +29,7 @@ class User:
 
         username = input('Enter username: ')
         password = input('Enter password: ')
+        data = [[]]
 
         # Получаем хэш пароля из базы данных для введенного имени пользователя
         c.execute('SELECT password FROM users WHERE username=?', (username,))
@@ -37,6 +40,8 @@ class User:
             # Если пользователь уже существует, проверяем введенный пароль
             if verify_password(password, result[0]):
                 print('Authorization is success!')
+                with open(f"{username}.json", "w") as tasks_file:
+                    json.dump(data, tasks_file)
                 user = RegisteredUser()
             else:
                 print('Incorrect password! Try again!')
@@ -44,6 +49,8 @@ class User:
             # Если пользователь не существует, добавляем его в базу данных
             hashed_password = pbkdf2_sha256.hash(password)
             c.execute('INSERT INTO users VALUES (?, ?)', (username, hashed_password))
+            with open(f"{username}.json", "w") as tasks_file:
+                json.dump(data, tasks_file)
             print('Registration is success!')
             user = RegisteredUser()
 
