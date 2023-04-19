@@ -96,7 +96,7 @@ class RegisteredUser(User):
         self.task.set_name(input("Enter task name: "))
         self.task.set_cost_name(int(input("Enter task cost in minutes: ")))
         self.task.set_category(input("Enter task category: "))
-        self.bank_today.add_list_of_tasks(task)
+        self.bank_today.add_list_of_tasks(self.task)
 
     def set_category(self, category):
         self.task.set_category(category)

@@ -4,17 +4,22 @@ from src.Bank import Bank
 
 
 class Task:
-    def __init__(self, cost_name):
+    def __init__(self):
         self.name = ""
-        self.cost_name = cost_name
+        self.cost_name = 0
         self.category = ""
         self.status = ""
+        self.dict_for_task = {}
+        self.list_of_tasks = []
 
     def set_name(self, name):
         self.name = name
+        self.dict_for_task["name"] = name
+        self.list_of_tasks.append(self.dict_for_task)
 
     def set_cost_name(self, cost_name):
         self.cost_name = cost_name
+        self.dict_for_task["cost"] = cost_name
 
     def get_cost_name(self):
         return self.cost_name
@@ -30,6 +35,7 @@ class Task:
 
     def set_category(self, category):
         self.category = category
+        self.dict_for_task["category(hashtag)"] = category
 
     def change_category(self, category):
         self.category = category
