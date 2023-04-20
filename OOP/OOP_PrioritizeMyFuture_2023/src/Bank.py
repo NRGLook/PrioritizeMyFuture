@@ -6,6 +6,7 @@ class Bank(ABC):
     def __init__(self):
         self.volume = 1440
         self.name = ""
+        self.list_of_tasks = []
 
     def set_volume(self, volume):
         self.volume = volume
