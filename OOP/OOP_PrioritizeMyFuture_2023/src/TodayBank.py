@@ -7,13 +7,14 @@ class TodayBank(Bank):
     def __init__(self):
         super().__init__()
         task = Task()
+        self.list_of_tasks = []
 
     def add_list_of_tasks(self, task):
-        with open("ilya.json", "a") as file:
-            json.dump(task.dict_for_task, file)
+        self.list_of_tasks.append(task.dict_for_task)
+        with open("ilya.json", "w") as file:
+            file.write(json.dumps(self.list_of_tasks))
         print("Task was added")
-        task.list_of_tasks.append(task.dict_for_task)
-        print(task.list_of_tasks)
+        print(self.list_of_tasks)
 
     def calculate_interest(self):
         # реализация метода для расчета процентов для сегодняшнего банка

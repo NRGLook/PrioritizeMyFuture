@@ -10,7 +10,6 @@ class Task:
         self.category = ""
         self.status = ""
         self.dict_for_task = {}
-        self.list_of_tasks = []
 
     def set_name(self, name):
         self.dict_for_task["name"] = name
