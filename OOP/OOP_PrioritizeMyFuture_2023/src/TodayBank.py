@@ -10,9 +10,9 @@ class TodayBank(Bank):
         self.list_of_tasks = []
 
     def add_list_of_tasks(self, task):
-        self.list_of_tasks.append(task.dict_for_task)
-        with open("ilya.json", "w") as file:
-            file.write(json.dumps(self.list_of_tasks))
+        with open("ilya.txt", "a") as file:
+            json.dumps(task.list_for_single_task)
+        self.list_of_tasks.append(task.list_for_single_task)
         print("Task was added")
         print(self.list_of_tasks)
 

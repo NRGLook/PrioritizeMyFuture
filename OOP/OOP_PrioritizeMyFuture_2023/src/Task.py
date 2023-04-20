@@ -9,13 +9,13 @@ class Task:
         self.cost_name = 0
         self.category = ""
         self.status = ""
-        self.dict_for_task = {}
+        self.list_for_single_task = []
 
     def set_name(self, name):
-        self.dict_for_task["name"] = name
+        self.list_for_single_task.append(name)
 
     def set_cost_name(self, cost_name):
-        self.dict_for_task["cost"] = cost_name
+        self.list_for_single_task.append(cost_name)
 
     def get_cost_name(self):
         return self.cost_name
@@ -30,7 +30,7 @@ class Task:
         self.status = status
 
     def set_category(self, category):
-        self.dict_for_task["category(hashtag)"] = category
+        self.list_for_single_task.append(category)
 
     def change_category(self, category):
         self.category = category
