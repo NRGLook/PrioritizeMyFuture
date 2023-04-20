@@ -10,10 +10,11 @@ class TodayBank(Bank):
         self.list_of_tasks = []
 
     def add_list_of_tasks(self, task):
-        with open("ilya.txt", "a") as file:
-            json.dumps(task.list_for_single_task)
-        self.list_of_tasks.append(task.list_for_single_task)
+        with open("ilya.json", "a") as file:
+            json.dump(task.create_list(), file)
+            file.write("\n")
         print("Task was added")
+        self.list_of_tasks.append(task.create_list())
         print(self.list_of_tasks)
 
     def calculate_interest(self):

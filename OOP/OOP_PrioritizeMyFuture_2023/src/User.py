@@ -103,12 +103,12 @@ class RegisteredUser(User):
         # self.tasks.set_category(category)
 
     def remove_task(self, task):
-        task.set_name(input("Enter task that are you going to remove:  "))
-        self.tasks.remove(task)
+        operation = int(input("Enter task that are you going to remove:  "))
+        self.bank_today.list_of_tasks.pop(operation)
 
     def update_task(self, task, new_task):
-        index = self.tasks.index(task)
-        self.tasks[index] = new_task
+        operation = int(input("Enter task that are you going to remove: \n 1-name\n2-costname\n3-category  "))
+        self
 
     def change_styles(self, styles):
         self.bank.change_styles(styles)
@@ -126,9 +126,7 @@ class RegisteredUser(User):
         y_o_burn = self.bank.volume - sum([task.cost_name for task in self.tasks])
         self.bank.set_y_o(self.bank.y_o + y_o_burn)
         self.bank.set_volume(1440)
-        self.tasks = []
 
     def transfer_to_future(self):
         y_o_transfer = sum([task.cost_name for task in self.tasks])
         self.bank.change_y_o(y_o_transfer)
-        self.tasks = []

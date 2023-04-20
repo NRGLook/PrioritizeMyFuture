@@ -9,13 +9,13 @@ class Task:
         self.cost_name = 0
         self.category = ""
         self.status = ""
-        self.list_for_single_task = []
+
 
     def set_name(self, name):
-        self.list_for_single_task.append(name)
+        self.name = name
 
     def set_cost_name(self, cost_name):
-        self.list_for_single_task.append(cost_name)
+        self.cost_name = cost_name
 
     def get_cost_name(self):
         return self.cost_name
@@ -30,8 +30,19 @@ class Task:
         self.status = status
 
     def set_category(self, category):
-        self.list_for_single_task.append(category)
+        self.category = category
 
     def change_category(self, category):
         self.category = category
+
+    def get_category(self):
+        return self.category
+
+    def create_list(self):
+        list_for_single_task = []
+        list_for_single_task.append(self.get_name())
+        list_for_single_task.append(self.get_cost_name())
+        list_for_single_task.append(self.get_category())
+        return list_for_single_task
+
 
