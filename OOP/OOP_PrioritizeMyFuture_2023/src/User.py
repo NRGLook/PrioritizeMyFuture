@@ -4,9 +4,7 @@ import sys
 import var.Constants
 
 from passlib.hash import pbkdf2_sha256
-from src.TodayBank import TodayBank
-from src.BankFuture import BankFuture
-from src.Task import Task
+from Bank import Bank
 
 
 class User:
@@ -14,11 +12,11 @@ class User:
     def __init__(self):
         self.username = ""
         self.password = ""
+        self.bank = Bank()
 
-    @staticmethod
     def registration(self):
 
-        print("Welcome to the app that will help you manage your time and stop wasting it!")
+        print(var.Constants.GREETING_TEXT)
         conn = sqlite3.connect('users.db')
         c = conn.cursor()
 
@@ -30,7 +28,7 @@ class User:
 
         username = input('Enter username: ')
         password = input('Enter password: ')
-        data = [{}]
+        data = {f"{username}: f[{list}]"}
 
         # Получаем хэш пароля из базы данных для введенного имени пользователя
         c.execute('SELECT password FROM users WHERE username=?', (username,))
@@ -41,8 +39,8 @@ class User:
             # Если пользователь уже существует, проверяем введенный пароль
             if verify_password(password, result[0]):
                 print('Authorization is success!')
-                # with open(f"{username}.json", "w") as tasks_file:
-                #    json.dump(data, tasks_file)
+                with open(f"{username}.json", "a") as tasks_file:
+                    json.dump(self.data, tasks_file)
                 user = RegisteredUser()
             else:
                 print('Incorrect password! Try again!')
@@ -50,8 +48,8 @@ class User:
             # Если пользователь не существует, добавляем его в базу данных
             hashed_password = pbkdf2_sha256.hash(password)
             c.execute('INSERT INTO users VALUES (?, ?)', (username, hashed_password))
-            # with open(f"{username}.json", "w") as tasks_file:
-            #    json.dump(data, tasks_file)
+            with open(f"{username}.json", "a") as tasks_file:
+                json.dump(self.data, tasks_file)
             print('Registration is success!')
             user = RegisteredUser()
 
@@ -62,17 +60,19 @@ class User:
 
 class RegisteredUser(User):
     def __init__(self):
-        self.bank_today = TodayBank()
-        self.bank_future = BankFuture()
-        self.task = Task()
+        super().__init__()
         self.response()
 
     def response(self):
         print(var.Constants.OPTIONS_TODO)
         while True:
             user_input = input('Choose command: ')
+            if user_input == '007':
+                self.show_all_tasks(self)
+            if user_input == '0':
+                self.show_task(self)
             if user_input == '1':
-                self.add_task_title(self)
+                self.add_task(self)
             if user_input == '2':
                 self.remove_task(self)
             if user_input == '3':
@@ -92,23 +92,34 @@ class RegisteredUser(User):
             if user_input == '10':
                 sys.exit()
 
-    def add_task_title(self, task):
-        self.task.set_name(input("Enter task name: "))
-        self.task.set_cost_name(int(input("Enter task cost in minutes: ")))
-        self.task.set_category(input("Enter task category: "))
-        self.bank_today.add_list_of_tasks(self.task)
+    @staticmethod
+    def show_all_tasks(self, bank):
+        print(bank.list_of_tasks)
+
+    @staticmethod
+    def show_task(self, bank):
+        operation = int(input("Enter number of task :  "))
+        print(bank.list_of_tasks[operation-1])
+
+    def add_task(self, bank):
+        self.bank.set_name(input("Enter task name: "))
+        self.bank.set_cost_name(int(input("Enter task cost in minutes: ")))
+        self.bank.set_category(input("Enter task category: "))
+        self.bank.add_list_of_tasks(self.task)
 
     def set_category(self, category):
-        self.task.set_category(category)
+        self.bank.set_category(category)
         # self.tasks.set_category(category)
 
-    def remove_task(self, task):
+    def remove_task(self, bank_today):
         operation = int(input("Enter task that are you going to remove:  "))
-        self.bank_today.list_of_tasks.pop(operation)
+        self.bank_today.list_of_tasks.pop(operation-1)
 
-    def update_task(self, task, new_task):
-        operation = int(input("Enter task that are you going to remove: \n 1-name\n2-costname\n3-category  "))
-        self
+    def update_task(self, bank_today):
+        operation = int(input("Enter number of task that are you going to update:  "))
+        choose_operation = int(input("Enter the field in task to update: \n1-name\n2-costmin\n3-category  "))
+        new_parameter = input("Enter new field: ")
+        self.bank_today.list_of_tasks[operation-1][choose_operation-1] = new_parameter
 
     def change_styles(self, styles):
         self.bank.change_styles(styles)

@@ -1,8 +1,3 @@
-import json
-from var.Constants import StatusTasks
-from src.Bank import Bank
-
-
 class Task:
     def __init__(self):
         self.name = ""
