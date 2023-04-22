@@ -97,13 +97,16 @@ class RegisteredUser(User):
         single_task = self.task_for_ToDoList.create_list()
         self.task_for_ToDoList.add_task_for_single_list(single_task)
         # print(f"Task was added to {self.username} file")
-        with open(f"{self.username}.json", "a") as file:
+        with open(f"{self.username}.json", "w") as file:
             json.dump(self.task_for_ToDoList.list_of_ALL_task, file)
             file.write("\n")
 
     def remove_task(self, task_for_ToDoList):
         operation = int(input("Enter task that are you going to remove:  "))
         self.task_for_ToDoList.list_of_ALL_task.pop(operation - 1)
+        with open(f"{self.username}.json", "w") as file:
+            json.dump(self.task_for_ToDoList.list_of_ALL_task, file)
+            file.write("\n")
 
     """
     def add_task(self, task_for_ToDoList):
