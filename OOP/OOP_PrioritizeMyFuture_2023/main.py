@@ -1,4 +1,4 @@
-from src.User import User, RegisteredUser
+from src.User import User
 
 
 if __name__ == "__main__":

@@ -1,16 +1,13 @@
-import json
 import sqlite3
 import sys
 import var.Constants
 
 from passlib.hash import pbkdf2_sha256
-from src.Bank import Bank
+from src.ToDoList import ToDoList
 
 
 class User:
-
     def __init__(self):
-        self.data = None
         self.username = ""
         self._password = ""
 
@@ -28,7 +25,6 @@ class User:
 
         self.username = input('Enter username: ')
         self._password = input('Enter password: ')
-        self.data = {f"{self.username}: f[{list}]"}
 
         # Получаем хэш пароля из базы данных для введенного имени пользователя
         c.execute('SELECT password FROM users WHERE username=?', (self.username,))
@@ -40,7 +36,7 @@ class User:
             if verify_password(self._password, result[0]):
                 print('Authorization is success!')
                 with open(f"{self.username}.json", "a") as tasks_file:
-                    json.dump(self.data, tasks_file)
+                    pass
                 user = RegisteredUser()
             else:
                 print('Incorrect password! Try again!')
@@ -49,7 +45,7 @@ class User:
             hashed_password = pbkdf2_sha256.hash(self._password)
             c.execute('INSERT INTO users VALUES (?, ?)', (self.username, hashed_password))
             with open(f"{self.username}.json", "a") as tasks_file:
-                json.dump(self.data, tasks_file)
+                pass
             print('Registration is success!')
             user = RegisteredUser()
 
@@ -61,12 +57,8 @@ class User:
 class RegisteredUser(User):
     def __init__(self):
         super().__init__()
-        self.bank = Bank()
+        self.task_for_ToDoList = ToDoList()
         self.response()
-
-    @property
-    def get_username(self):
-        return self.username
 
     def response(self):
         print(var.Constants.OPTIONS_TODO)
@@ -97,30 +89,41 @@ class RegisteredUser(User):
             if user_input == '10':
                 sys.exit()
 
-    @staticmethod
+    """
+    @property
+    def username(self):
+        return self.username
+
+    @username.setter
+    def username(self, username):
+        self.username = username
+    """
+
+    def add_task(self, task_for_ToDoList):
+        """
+        with open(f"{User.registration(self)}.json", "a") as file:
+            json.dump(task.create_list(), file)
+            file.write("\n")
+        """
+        single_task = self.task_for_ToDoList.create_list()
+        self.task_for_ToDoList.add_task_for_single_list(single_task)
+
     def show_all_tasks(self, bank):
         print(bank.list_of_tasks)
 
-    @staticmethod
     def show_task(self, task):
         operation = int(input("Enter number of task :  "))
-        print(task.list_of_tasks[operation-1])
-
-    def add_task(self, task):
-        self.task.set_name(input("Enter task name: "))
-        self.task.set_cost_name(int(input("Enter task cost in minutes: ")))
-        self.task.set_category(input("Enter task category: "))
-        self.task.add_list_of_tasks(self.task)
+        print(task.list_of_tasks[operation - 1])
 
     def remove_task(self, task):
         operation = int(input("Enter task that are you going to remove:  "))
-        self.task.list_of_tasks.pop(operation-1)
+        self.task.list_of_tasks.pop(operation - 1)
 
     def update_task(self, bank_today):
         operation = int(input("Enter number of task that are you going to update:  "))
         choose_operation = int(input("Enter the field in task to update: \n1-name\n2-costmin\n3-category  "))
         new_parameter = input("Enter new field: ")
-        self.bank_today.list_of_tasks[operation-1][choose_operation-1] = new_parameter
+        self.bank_today.list_of_tasks[operation - 1][choose_operation - 1] = new_parameter
 
     def change_styles(self, styles):
         self.bank.change_styles(styles)

@@ -1,13 +1,16 @@
 import json
+from abc import ABC
 
 from src.Bank import Bank
 
 
-class TodayBank(Bank):
+class TodayBank(Bank, ABC):
     def __init__(self):
         super().__init__()
-        self.list_of_not_done_tasks = []
+        self.list_of_NOT_DONE_tasks = []
 
+    def calculate_statistic_for_task(self):
+        pass
 
 """
     def add_list_of_tasks(self, task):

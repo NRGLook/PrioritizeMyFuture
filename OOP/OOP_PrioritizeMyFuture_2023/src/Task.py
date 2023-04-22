@@ -1,56 +1,55 @@
 import json
 
-from src.User import User
+import self as self
 
 
 class Task:
     def __init__(self):
         self.name = ""
-        self.cost_name = 0
         self.category = ""
-        self.status = ""
-        self.list_of_tasks = []
+        self.cost_name = 0
+        self.status = "Not Done"
 
-    def add_list_of_tasks(self, task):
-        with open(f"{User.get_username()}.json", "a") as file:
-            json.dump(task.create_list(), file)
-            file.write("\n")
-        print("Task was added")
-        self.list_of_tasks.append(task.create_list())
-        print(self.list_of_tasks)
-
-    def set_name(self, name):
-        self.name = name
-
-    def set_cost_name(self, cost_name):
-        self.cost_name = cost_name
-
-    def get_cost_name(self):
-        return self.cost_name
-
-    def get_name(self):
+    """
+    @property
+    def name(self):
         return self.name
 
-    def set_status(self, status):
-        self.status = status
+    @property
+    def cost_name(self):
+        return self.cost_name
 
-    def change_status(self, status):
-        self.status = status
-
-    def set_category(self, category):
-        self.category = category
-
-    def change_category(self, category):
-        self.category = category
-
-    def get_category(self):
+    @property
+    def category(self):
         return self.category
+
+    @property
+    def status(self):
+        return self.status
+    """
+    def set_name(self):
+        self.name = input("Enter task name: ")
+        return self.name
+
+    def set_cost_name(self):
+        self.cost_name = int(input("Enter task cost in minutes: "))
+        return self.cost_name
+
+    def set_category(self):
+        self.category = input("Enter task category: ")
+        return self.category
+
+    def set_status(self):
+        return self.status
 
     def create_list(self):
         list_for_single_task = []
-        list_for_single_task.append(self.get_name())
-        list_for_single_task.append(self.get_cost_name())
-        list_for_single_task.append(self.get_category())
+        list_for_single_task.append(self.set_name())
+        list_for_single_task.append(self.set_cost_name())
+        list_for_single_task.append(self.set_category())
+        list_for_single_task.append(self.set_status())
         return list_for_single_task
 
+    def return_single_list(self):
+        return self.list_for_single_task
 
