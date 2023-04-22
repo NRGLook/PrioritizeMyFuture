@@ -1,5 +1,6 @@
 import sqlite3
 import sys
+import json
 import var.Constants
 
 from passlib.hash import pbkdf2_sha256
@@ -8,8 +9,8 @@ from src.ToDoList import ToDoList
 
 class User:
     def __init__(self):
-        self.username = ""
-        self._password = ""
+        self.username = ''
+        self._password = ''
 
     def registration(self):
 
@@ -37,7 +38,7 @@ class User:
                 print('Authorization is success!')
                 with open(f"{self.username}.json", "a") as tasks_file:
                     pass
-                user = RegisteredUser()
+                user = RegisteredUser(self.username)
             else:
                 print('Incorrect password! Try again!')
         else:
@@ -47,16 +48,19 @@ class User:
             with open(f"{self.username}.json", "a") as tasks_file:
                 pass
             print('Registration is success!')
-            user = RegisteredUser()
+            user = RegisteredUser(self.username)
 
         # Сохраняем изменения и закрываем соединение с базой данных
         conn.commit()
         conn.close()
 
+    def get_username(self):
+        return self.username
 
 class RegisteredUser(User):
-    def __init__(self):
+    def __init__(self, username):
         super().__init__()
+        self.username = username
         self.task_for_ToDoList = ToDoList()
         self.response()
 
@@ -89,24 +93,37 @@ class RegisteredUser(User):
             if user_input == '10':
                 sys.exit()
 
-    """
-    @property
-    def username(self):
-        return self.username
-
-    @username.setter
-    def username(self, username):
-        self.username = username
-    """
-
     def add_task(self, task_for_ToDoList):
-        """
-        with open(f"{User.registration(self)}.json", "a") as file:
-            json.dump(task.create_list(), file)
-            file.write("\n")
-        """
         single_task = self.task_for_ToDoList.create_list()
         self.task_for_ToDoList.add_task_for_single_list(single_task)
+        # print(f"Task was added to {self.username} file")
+        with open(f"{self.username}.json", "a") as file:
+            json.dump(self.task_for_ToDoList.list_of_ALL_task, file)
+            file.write("\n")
+
+    def remove_task(self, task_for_ToDoList):
+        operation = int(input("Enter task that are you going to remove:  "))
+        self.task_for_ToDoList.list_of_ALL_task.pop(operation - 1)
+
+    """
+    def add_task(self, task_for_ToDoList):
+        print(f"Task was added to {self.username} file")
+        single_task = self.task_for_ToDoList.create_list()
+        self.task_for_ToDoList.add_task_for_single_list(single_task)
+        with open(f"{self.username}.json", "r+") as file:
+            try:
+                data = json.load(file)
+            except json.decoder.JSONDecodeError:
+                data = []
+            data.extend(self.task_for_ToDoList.list_of_ALL_task)
+            # Удаление дубликатов в списке задач
+            data = list(set([json.dumps(i) for i in data]))
+            # Запись списка задач без дубликатов в файл
+            file.seek(0)
+            file.truncate()
+            for task in data:
+                file.write(task + "\n")
+    """
 
     def show_all_tasks(self, bank):
         print(bank.list_of_tasks)
@@ -114,10 +131,6 @@ class RegisteredUser(User):
     def show_task(self, task):
         operation = int(input("Enter number of task :  "))
         print(task.list_of_tasks[operation - 1])
-
-    def remove_task(self, task):
-        operation = int(input("Enter task that are you going to remove:  "))
-        self.task.list_of_tasks.pop(operation - 1)
 
     def update_task(self, bank_today):
         operation = int(input("Enter number of task that are you going to update:  "))

@@ -11,7 +11,7 @@ class ToDoList(Task):
 
     def add_task_for_single_list(self, task):
         self.list_of_ALL_task.append(task)
-        print(self.list_of_ALL_task)
+        print("Task was added: ", self.list_of_ALL_task)
 
     def remove_task(self, bank_today):
         operation = int(input("Enter task that are you going to remove:  "))
