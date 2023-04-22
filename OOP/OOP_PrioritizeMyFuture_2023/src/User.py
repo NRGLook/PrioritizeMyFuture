@@ -4,15 +4,15 @@ import sys
 import var.Constants
 
 from passlib.hash import pbkdf2_sha256
-from Bank import Bank
+from src.Bank import Bank
 
 
 class User:
 
     def __init__(self):
+        self.data = None
         self.username = ""
-        self.password = ""
-        self.bank = Bank()
+        self._password = ""
 
     def registration(self):
 
@@ -26,29 +26,29 @@ class User:
         def verify_password(password, hashed):
             return pbkdf2_sha256.verify(password, hashed)
 
-        username = input('Enter username: ')
-        password = input('Enter password: ')
-        data = {f"{username}: f[{list}]"}
+        self.username = input('Enter username: ')
+        self._password = input('Enter password: ')
+        self.data = {f"{self.username}: f[{list}]"}
 
         # Получаем хэш пароля из базы данных для введенного имени пользователя
-        c.execute('SELECT password FROM users WHERE username=?', (username,))
+        c.execute('SELECT password FROM users WHERE username=?', (self.username,))
         result = c.fetchone()
 
         # Проверяем, существует ли пользователь с таким именем в базе данных
         if result:
             # Если пользователь уже существует, проверяем введенный пароль
-            if verify_password(password, result[0]):
+            if verify_password(self._password, result[0]):
                 print('Authorization is success!')
-                with open(f"{username}.json", "a") as tasks_file:
+                with open(f"{self.username}.json", "a") as tasks_file:
                     json.dump(self.data, tasks_file)
                 user = RegisteredUser()
             else:
                 print('Incorrect password! Try again!')
         else:
             # Если пользователь не существует, добавляем его в базу данных
-            hashed_password = pbkdf2_sha256.hash(password)
-            c.execute('INSERT INTO users VALUES (?, ?)', (username, hashed_password))
-            with open(f"{username}.json", "a") as tasks_file:
+            hashed_password = pbkdf2_sha256.hash(self._password)
+            c.execute('INSERT INTO users VALUES (?, ?)', (self.username, hashed_password))
+            with open(f"{self.username}.json", "a") as tasks_file:
                 json.dump(self.data, tasks_file)
             print('Registration is success!')
             user = RegisteredUser()
@@ -61,7 +61,12 @@ class User:
 class RegisteredUser(User):
     def __init__(self):
         super().__init__()
+        self.bank = Bank()
         self.response()
+
+    @property
+    def get_username(self):
+        return self.username
 
     def response(self):
         print(var.Constants.OPTIONS_TODO)
@@ -97,23 +102,19 @@ class RegisteredUser(User):
         print(bank.list_of_tasks)
 
     @staticmethod
-    def show_task(self, bank):
+    def show_task(self, task):
         operation = int(input("Enter number of task :  "))
-        print(bank.list_of_tasks[operation-1])
+        print(task.list_of_tasks[operation-1])
 
-    def add_task(self, bank):
-        self.bank.set_name(input("Enter task name: "))
-        self.bank.set_cost_name(int(input("Enter task cost in minutes: ")))
-        self.bank.set_category(input("Enter task category: "))
-        self.bank.add_list_of_tasks(self.task)
+    def add_task(self, task):
+        self.task.set_name(input("Enter task name: "))
+        self.task.set_cost_name(int(input("Enter task cost in minutes: ")))
+        self.task.set_category(input("Enter task category: "))
+        self.task.add_list_of_tasks(self.task)
 
-    def set_category(self, category):
-        self.bank.set_category(category)
-        # self.tasks.set_category(category)
-
-    def remove_task(self, bank_today):
+    def remove_task(self, task):
         operation = int(input("Enter task that are you going to remove:  "))
-        self.bank_today.list_of_tasks.pop(operation-1)
+        self.task.list_of_tasks.pop(operation-1)
 
     def update_task(self, bank_today):
         operation = int(input("Enter number of task that are you going to update:  "))
@@ -123,15 +124,6 @@ class RegisteredUser(User):
 
     def change_styles(self, styles):
         self.bank.change_styles(styles)
-
-    def set_name(self, name):
-        self.bank.set_name(name)
-
-    def set_y_o(self, y_o):
-        self.bank.set_y_o(y_o)
-
-    def get_y_o(self):
-        return self.bank.get_y_o()
 
     def burn_today(self):
         y_o_burn = self.bank.volume - sum([task.cost_name for task in self.tasks])

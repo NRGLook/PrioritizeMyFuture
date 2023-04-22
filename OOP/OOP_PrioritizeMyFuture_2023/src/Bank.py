@@ -1,4 +1,5 @@
 import json
+
 from abc import ABC, abstractmethod
 from src.User import User
 from src.Task import Task
@@ -6,38 +7,26 @@ from src.Task import Task
 
 class Bank(ABC):
     def __init__(self):
+        self.styles = None
         self.volume = 1440
         self.name = ""
-        self.list_of_tasks = []
+        self.list_of_all_tasks = []
         task = Task()
 
-    def get_list_of_tasks(self):
-        list_of_ALL_task = []
+    @staticmethod
+    def get_list_of_all_tasks(self):
         with open(f"{User.username}.json", "r") as file:
-            json.load(list_of_ALL_task, file)
+            json.load(self.list_of_all_tasks, file)
             file.write("\n")
 
-    def set_volume(self, volume):
-        self.volume = volume
-
-    def set_styles(self, styles):
-        self.styles = styles
-
-    def change_styles(self, styles):
+    @property
+    def style(self, styles):
         self.styles += styles
 
-    def set_name(self, name):
-        self.name = name
-
-    def set_y_o(self, y_o):
-        self.y_o = y_o
-
-    def change_y_o(self, y_o):
-        self.y_o += y_o
-
-    def get_y_o(self):
-        return self.y_o
+    @style.setter
+    def style(self, styles):
+        self.styles = styles
 
     @abstractmethod
-    def calculate_interest(self):
+    def calculate_statistic_for_task(self):
         pass

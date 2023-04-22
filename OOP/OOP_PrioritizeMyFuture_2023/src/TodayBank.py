@@ -1,14 +1,14 @@
 import json
-from abc import ABC
 
 from src.Bank import Bank
-from src.Task import Task
 
 
-class TodayBank(Bank, ABC):
+class TodayBank(Bank):
     def __init__(self):
         super().__init__()
-        self.list_of_tasks = []
+        self.list_of_not_done_tasks = []
+
+
 """
     def add_list_of_tasks(self, task):
         with open(f"{User.username}.json", "a") as file:
@@ -18,7 +18,6 @@ class TodayBank(Bank, ABC):
         self.list_of_tasks.append(task.create_list())
         print(self.list_of_tasks)
 
-    def calculate_interest(self):
-        # реализация метода для расчета процентов для сегодняшнего банка
+    def calculate_statistic_for_task(self):
         pass
 """

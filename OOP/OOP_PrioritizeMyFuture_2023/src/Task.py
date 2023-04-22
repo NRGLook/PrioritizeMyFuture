@@ -1,10 +1,23 @@
+import json
+
+from src.User import User
+
+
 class Task:
     def __init__(self):
         self.name = ""
         self.cost_name = 0
         self.category = ""
         self.status = ""
+        self.list_of_tasks = []
 
+    def add_list_of_tasks(self, task):
+        with open(f"{User.get_username()}.json", "a") as file:
+            json.dump(task.create_list(), file)
+            file.write("\n")
+        print("Task was added")
+        self.list_of_tasks.append(task.create_list())
+        print(self.list_of_tasks)
 
     def set_name(self, name):
         self.name = name
