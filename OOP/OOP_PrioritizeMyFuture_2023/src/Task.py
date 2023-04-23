@@ -1,6 +1,4 @@
-import json
-
-import self as self
+import datetime
 
 
 class Task:
@@ -49,7 +47,4 @@ class Task:
         list_for_single_task.append(self.set_category())
         list_for_single_task.append(self.set_status())
         return list_for_single_task
-
-    def return_single_list(self):
-        return self.list_for_single_task
 

@@ -1,5 +1,3 @@
-import json
-
 from abc import ABC, abstractmethod
 from src.ToDoList import ToDoList
 
@@ -20,10 +18,5 @@ class Bank(ABC):
 
     @abstractmethod
     def calculate_statistic_for_task(self):
-        pass
+        print(len(self.to_do_list.list_of_ALL_task))
 
-    @staticmethod
-    def get_list_of_ALL_tasks(self):
-        with open(f"{self.get_username}", "r") as file:
-            json.load(file)
-            file.write("\n")

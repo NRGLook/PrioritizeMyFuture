@@ -1,5 +1,3 @@
-import json
-
 from src.Task import Task
 
 
@@ -23,3 +21,4 @@ class ToDoList(Task):
 
     def show_specific_task(self, operation):
         print("Task what you choose: ", self.list_of_ALL_task[operation - 1])
+

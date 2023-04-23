@@ -10,17 +10,11 @@ class TodayBank(Bank, ABC):
         self.list_of_NOT_DONE_tasks = []
 
     def calculate_statistic_for_task(self):
-        pass
+        count_of_not_done_tasks = 0
+        while True:
+            if self.to_do_list.list_of_ALL_task[4] == "Not Done":
+                count_of_not_done_tasks += 1
+            else:
+                break
+        print(count_of_not_done_tasks)
 
-"""
-    def add_list_of_tasks(self, task):
-        with open(f"{User.username}.json", "a") as file:
-            json.dump(task.create_list(), file)
-            file.write("\n")
-        print("Task was added")
-        self.list_of_tasks.append(task.create_list())
-        print(self.list_of_tasks)
-
-    def calculate_statistic_for_task(self):
-        pass
-"""

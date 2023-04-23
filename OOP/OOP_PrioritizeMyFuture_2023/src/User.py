@@ -1,6 +1,7 @@
 import sqlite3
 import sys
 import json
+import datetime
 import var.Constants
 
 from passlib.hash import pbkdf2_sha256
@@ -57,12 +58,22 @@ class User:
     def get_username(self):
         return self.username
 
+
 class RegisteredUser(User):
     def __init__(self, username):
         super().__init__()
         self.username = username
         self.task_for_ToDoList = ToDoList()
+        self.minutes_left_in_day(self)
         self.response()
+
+    @staticmethod
+    def minutes_left_in_day(self):
+        now = datetime.datetime.now()
+        end_of_day = now.replace(hour=23, minute=59, second=59, microsecond=999999)
+        time_left = end_of_day - now
+        minutes_left = int(time_left.total_seconds() // 60)
+        print("Number of available (remaining) minutes per day: ", minutes_left)
 
     def response(self):
         print(var.Constants.OPTIONS_TODO)
