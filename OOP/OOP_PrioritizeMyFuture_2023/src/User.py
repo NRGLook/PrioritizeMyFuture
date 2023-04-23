@@ -29,13 +29,10 @@ class User:
         self.username = input('Enter username: ')
         self._password = input('Enter password: ')
 
-        # Получаем хэш пароля из базы данных для введенного имени пользователя
         c.execute('SELECT password FROM users WHERE username=?', (self.username,))
         result = c.fetchone()
 
-        # Проверяем, существует ли пользователь с таким именем в базе данных
         if result:
-            # Если пользователь уже существует, проверяем введенный пароль
             if verify_password(self._password, result[0]):
                 print('Authorization is success!')
                 with open(f"{self.username}.json", "a") as tasks_file:
@@ -44,7 +41,6 @@ class User:
             else:
                 print('Incorrect password! Try again!')
         else:
-            # Если пользователь не существует, добавляем его в базу данных
             hashed_password = pbkdf2_sha256.hash(self._password)
             c.execute('INSERT INTO users VALUES (?, ?)', (self.username, hashed_password))
             with open(f"{self.username}.json", "a") as tasks_file:
@@ -52,7 +48,6 @@ class User:
             print('Registration is success!')
             user = RegisteredUser(self.username)
 
-        # Сохраняем изменения и закрываем соединение с базой данных
         conn.commit()
         conn.close()
 
@@ -65,9 +60,9 @@ class RegisteredUser(User):
         super().__init__()
         self.username = username
         self.task_for_ToDoList = ToDoList()
-        # self.bank = Bank()
         self.minutes_left_in_day(self)
         self.response()
+        # circle dependence -> self.bank = Bank()
 
     @staticmethod
     def minutes_left_in_day(self):
@@ -85,10 +80,6 @@ class RegisteredUser(User):
         print(var.Constants.OPTIONS_TODO)
         while True:
             user_input = input('Choose command: ')
-            if user_input == '007':
-                self.show_all_tasks(self)
-            if user_input == '0':
-                self.show_specific_task(self)
             if user_input == '1':
                 self.add_task(self)
             if user_input == '2':
@@ -96,21 +87,17 @@ class RegisteredUser(User):
             if user_input == '3':
                 self.update_task(self)
             if user_input == '4':
-                self.change_styles(self)
+                self.show_all_tasks(self)
             if user_input == '5':
-                self.set_name(self)
+                self.show_specific_task(self)
             if user_input == '6':
-                self.set_y_o(self)
+                self.show_done_task(self)
             if user_input == '7':
-                self.get_y_o(self)
+                self.show_not_done_task(self)
             if user_input == '8':
                 self.burn_today(self)
             if user_input == '9':
                 self.transfer_to_future(self)
-            if user_input == '90':
-                self.show_done_task(self)
-            if user_input == '91':
-                self.show_not_done_task(self)
             if user_input == '10':
                 sys.exit()
 
@@ -150,12 +137,12 @@ class RegisteredUser(User):
     def show_not_done_task(self, task_for_ToDoList):
         self.task_for_ToDoList.show_not_done_task(self.task_for_ToDoList)
 
-    def burn_today(self):
+    def burn_today(self, task_for_ToDoList):
         y_o_burn = self.bank.volume - sum([task.cost_name for task in self.tasks])
         self.bank.set_y_o(self.bank.y_o + y_o_burn)
         self.bank.set_volume(1440)
 
-    def transfer_to_future(self):
+    def transfer_to_future(self, task_for_ToDoList):
         y_o_transfer = sum([task.cost_name for task in self.tasks])
         self.bank.change_y_o(y_o_transfer)
 

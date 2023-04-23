@@ -16,7 +16,6 @@ class ToDoList(Task):
     def remove_task(self, operation):
         self.list_of_ALL_task.pop(operation - 1)
         print("Task was deleted: ", self.list_of_ALL_task)
-        print("Now you have", Task.get_available_minutes)
 
     def update_task(self, operation, choose_operation, new_parameter):
         self.list_of_ALL_task[operation - 1][choose_operation - 1] = new_parameter
@@ -25,7 +24,7 @@ class ToDoList(Task):
     def show_specific_task(self, operation):
         print("Task what you choose: ", self.list_of_ALL_task[operation - 1])
 
-    def show_done_task(self, task_for_ToDoList):
+    def show_done_task(self, task_for_ToDoList, task):
         list = [Task.create_list(task_for_ToDoList)]
         for list in self.list_of_ALL_task:
             if list[3] == "Not Done":

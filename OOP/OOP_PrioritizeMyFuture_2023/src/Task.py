@@ -14,13 +14,15 @@ class Task:
         return self.name
 
     def set_cost_name(self):
-        while self.available_minutes <= 0:
-            self.cost_name = int(input("Enter task cost in minutes: "))
-            now = datetime.datetime.now()
-            end_of_day = now.replace(hour=23, minute=59, second=59, microsecond=999999)
-            time_left = end_of_day - now
-            minutes_left = int(time_left.total_seconds() // 60)
-            self.available_minutes = minutes_left - self.cost_name
+        self.cost_name = int(input("Enter task cost in minutes: "))
+        now = datetime.datetime.now()
+        end_of_day = now.replace(hour=23, minute=59, second=59, microsecond=999999)
+        time_left = end_of_day - now
+        minutes_left = int(time_left.total_seconds() // 60)
+        self.available_minutes = minutes_left - self.cost_name
+        if self.available_minutes <= 0:
+            print("Incorrect value! Please, try to add task again!")
+            return "0"
         print("Number of available (remaining) minutes per day: ", self.available_minutes-self.cost_name)
         return self.cost_name
 
