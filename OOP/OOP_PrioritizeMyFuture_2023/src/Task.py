@@ -44,10 +44,10 @@ class Task:
 
     def create_list(self):
         list_for_single_task = []
-        list_for_single_task = list_for_single_task.append(self.set_name())
-        list_for_single_task = list_for_single_task.append(self.set_cost_name())
-        list_for_single_task = list_for_single_task.append(self.set_category())
-        list_for_single_task = list_for_single_task.append(self.set_status())
+        list_for_single_task.append(self.set_name())
+        list_for_single_task.append(self.set_cost_name())
+        list_for_single_task.append(self.set_category())
+        list_for_single_task.append(self.set_status())
         return list_for_single_task
 
     def return_single_list(self):

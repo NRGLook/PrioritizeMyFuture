@@ -21,6 +21,5 @@ class ToDoList(Task):
         self.list_of_ALL_task[operation - 1][choose_operation - 1] = new_parameter
         print("Task was updated: ", self.list_of_ALL_task)
 
-    def show_task(self, bank):
-        operation = int(input("Enter number of task :  "))
-        print(bank.list_of_ALL_task[operation - 1])
+    def show_specific_task(self, operation):
+        print("Task what you choose: ", self.list_of_ALL_task[operation - 1])

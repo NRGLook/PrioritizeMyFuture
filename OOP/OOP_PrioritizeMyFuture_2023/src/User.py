@@ -71,7 +71,7 @@ class RegisteredUser(User):
             if user_input == '007':
                 self.show_all_tasks(self)
             if user_input == '0':
-                self.show_task(self)
+                self.show_specific_task(self)
             if user_input == '1':
                 self.add_task(self)
             if user_input == '2':
@@ -117,6 +117,14 @@ class RegisteredUser(User):
             json.dump(self.task_for_ToDoList.list_of_ALL_task, file)
             file.write("\n")
 
+    def show_specific_task(self, task_for_ToDoList):
+        operation = int(input("Enter number of task: "))
+        self.task_for_ToDoList.show_specific_task(operation)
+
+    def show_all_tasks(self, task_for_ToDoList):
+        with open(f"{self.username}.json", "r") as file:
+            all_task = json.load(file)
+            print(all_task)
     """
     def add_task(self, task_for_ToDoList):
         print(f"Task was added to {self.username} file")
@@ -136,13 +144,6 @@ class RegisteredUser(User):
             for task in data:
                 file.write(task + "\n")
     """
-
-    def show_all_tasks(self, bank):
-        print(bank.list_of_tasks)
-
-    def show_task(self, task):
-        operation = int(input("Enter number of task :  "))
-        print(task.list_of_tasks[operation - 1])
 
     def change_styles(self, styles):
         self.bank.change_styles(styles)
