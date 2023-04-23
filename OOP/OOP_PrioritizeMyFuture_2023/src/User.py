@@ -150,6 +150,15 @@ class RegisteredUser(User):
     def show_not_done_task(self, task_for_ToDoList):
         self.task_for_ToDoList.show_not_done_task(self.task_for_ToDoList)
 
+    def burn_today(self):
+        y_o_burn = self.bank.volume - sum([task.cost_name for task in self.tasks])
+        self.bank.set_y_o(self.bank.y_o + y_o_burn)
+        self.bank.set_volume(1440)
+
+    def transfer_to_future(self):
+        y_o_transfer = sum([task.cost_name for task in self.tasks])
+        self.bank.change_y_o(y_o_transfer)
+
     """
     def add_task(self, task_for_ToDoList):
         print(f"Task was added to {self.username} file")
@@ -169,15 +178,3 @@ class RegisteredUser(User):
             for task in data:
                 file.write(task + "\n")
     """
-
-    def change_styles(self, styles):
-        self.bank.change_styles(styles)
-
-    def burn_today(self):
-        y_o_burn = self.bank.volume - sum([task.cost_name for task in self.tasks])
-        self.bank.set_y_o(self.bank.y_o + y_o_burn)
-        self.bank.set_volume(1440)
-
-    def transfer_to_future(self):
-        y_o_transfer = sum([task.cost_name for task in self.tasks])
-        self.bank.change_y_o(y_o_transfer)
