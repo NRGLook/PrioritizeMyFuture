@@ -103,7 +103,16 @@ class RegisteredUser(User):
 
     def remove_task(self, task_for_ToDoList):
         operation = int(input("Enter task that are you going to remove:  "))
-        self.task_for_ToDoList.list_of_ALL_task.pop(operation - 1)
+        self.task_for_ToDoList.remove_task(operation)
+        with open(f"{self.username}.json", "w") as file:
+            json.dump(self.task_for_ToDoList.list_of_ALL_task, file)
+            file.write("\n")
+
+    def update_task(self, task_for_ToDoList):
+        operation = int(input("Enter number of task that are you going to update:  "))
+        choose_operation = int(input("Enter the field in task to update: \n1-name\n2-costmin\n3-category  "))
+        new_parameter = input("Enter new field: ")
+        self.task_for_ToDoList.update_task(operation, choose_operation, new_parameter)
         with open(f"{self.username}.json", "w") as file:
             json.dump(self.task_for_ToDoList.list_of_ALL_task, file)
             file.write("\n")
@@ -134,12 +143,6 @@ class RegisteredUser(User):
     def show_task(self, task):
         operation = int(input("Enter number of task :  "))
         print(task.list_of_tasks[operation - 1])
-
-    def update_task(self, bank_today):
-        operation = int(input("Enter number of task that are you going to update:  "))
-        choose_operation = int(input("Enter the field in task to update: \n1-name\n2-costmin\n3-category  "))
-        new_parameter = input("Enter new field: ")
-        self.bank_today.list_of_tasks[operation - 1][choose_operation - 1] = new_parameter
 
     def change_styles(self, styles):
         self.bank.change_styles(styles)
