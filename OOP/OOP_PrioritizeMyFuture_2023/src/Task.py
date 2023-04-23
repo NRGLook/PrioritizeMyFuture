@@ -33,6 +33,9 @@ class Task:
         self.cost_name = int(input("Enter task cost in minutes: "))
         return self.cost_name
 
+    def get_cost_name(self):
+        return self.cost_name
+
     def set_category(self):
         self.category = input("Enter task category: ")
         return self.category

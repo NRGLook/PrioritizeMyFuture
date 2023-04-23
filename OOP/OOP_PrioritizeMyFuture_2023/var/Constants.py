@@ -1,6 +1,3 @@
-from enum import Enum
-
-
 GREETING_TEXT = "Welcome to the app that will help you manage your time and stop wasting it!"
 
 OPTIONS_TODO = """
@@ -22,26 +19,7 @@ OPTIONS_FOR_SINGLE_TASK = """DONE
  NOT DONE
  IN PROCESS(ilya procrastinator doing smth else)"""
 
-
-
-
-
-OPTIONS_EDIT_TASK = """0 - response
-\n1 - remove task
-\n2 - change to DONE
-\n3 - update"""
-
-OPTIONS_UPDATE = """0 - response
-\n1 - edit name
-\n2 - edit category"""
-
-
-class StatusTasks(Enum):
-    DONE = 1
-    PENDING = 0
-
-
-class CategoryTasks(Enum):
-    NONE = 0
-    DOING = 0.5
-    CUSTOM = 0.1
+LIST_OF_ITEM_SHOP = """1 - book
+                       2 - free subscribe for 1 month
+                       3 - other items in developing
+                    """

@@ -6,6 +6,7 @@ import var.Constants
 
 from passlib.hash import pbkdf2_sha256
 from src.ToDoList import ToDoList
+from src.ItemsShop import ItemsShop
 
 
 class User:
@@ -64,6 +65,7 @@ class RegisteredUser(User):
         super().__init__()
         self.username = username
         self.task_for_ToDoList = ToDoList()
+        # self.bank = Bank()
         self.minutes_left_in_day(self)
         self.response()
 
@@ -74,6 +76,10 @@ class RegisteredUser(User):
         time_left = end_of_day - now
         minutes_left = int(time_left.total_seconds() // 60)
         print("Number of available (remaining) minutes per day: ", minutes_left)
+
+    @staticmethod
+    def enter_to_item_shop(self):
+        ItemsShop.buy_items()
 
     def response(self):
         print(var.Constants.OPTIONS_TODO)
@@ -101,6 +107,10 @@ class RegisteredUser(User):
                 self.burn_today(self)
             if user_input == '9':
                 self.transfer_to_future(self)
+            if user_input == '90':
+                self.show_done_task(self)
+            if user_input == '91':
+                self.show_not_done_task(self)
             if user_input == '10':
                 sys.exit()
 
@@ -119,7 +129,7 @@ class RegisteredUser(User):
 
     def update_task(self, task_for_ToDoList):
         operation = int(input("Enter number of task that are you going to update:  "))
-        choose_operation = int(input("Enter the field in task to update: \n1-name\n2-costmin\n3-category  "))
+        choose_operation = int(input("Enter the field in task to update:\n1-name\n2-cost\n3-category\n"))
         new_parameter = input("Enter new field: ")
         self.task_for_ToDoList.update_task(operation, choose_operation, new_parameter)
         with open(f"{self.username}.json", "w") as file:
@@ -133,6 +143,13 @@ class RegisteredUser(User):
         with open(f"{self.username}.json", "r") as file:
             all_task = json.load(file)
             print(all_task)
+
+    def show_done_task(self, task_for_ToDoList):
+        self.task_for_ToDoList.show_done_task(self.task_for_ToDoList)
+
+    def show_not_done_task(self, task_for_ToDoList):
+        self.task_for_ToDoList.show_not_done_task(self.task_for_ToDoList)
+
     """
     def add_task(self, task_for_ToDoList):
         print(f"Task was added to {self.username} file")
