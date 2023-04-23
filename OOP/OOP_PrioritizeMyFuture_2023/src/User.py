@@ -99,14 +99,12 @@ class RegisteredUser(User):
         # print(f"Task was added to {self.username} file")
         with open(f"{self.username}.json", "w") as file:
             json.dump(self.task_for_ToDoList.list_of_ALL_task, file)
-            file.write("\n")
 
     def remove_task(self, task_for_ToDoList):
         operation = int(input("Enter task that are you going to remove:  "))
         self.task_for_ToDoList.remove_task(operation)
         with open(f"{self.username}.json", "w") as file:
             json.dump(self.task_for_ToDoList.list_of_ALL_task, file)
-            file.write("\n")
 
     def update_task(self, task_for_ToDoList):
         operation = int(input("Enter number of task that are you going to update:  "))
@@ -115,7 +113,6 @@ class RegisteredUser(User):
         self.task_for_ToDoList.update_task(operation, choose_operation, new_parameter)
         with open(f"{self.username}.json", "w") as file:
             json.dump(self.task_for_ToDoList.list_of_ALL_task, file)
-            file.write("\n")
 
     def show_specific_task(self, task_for_ToDoList):
         operation = int(input("Enter number of task: "))
