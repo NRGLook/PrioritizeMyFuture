@@ -12,7 +12,7 @@ class TodayBank(Bank, ABC):
         self.list_of_NOT_DONE_task_Today_Bank = []
 
     def calculate_statistic_for_task(self):
-        self.list_of_NOT_DONE_task_Today_Bank = self.task_for_ToDoList.show_not_done_task()
+        self.list_of_NOT_DONE_task_Today_Bank = self.task_for_ToDoList.get_list_of_NOTDONE_task()
         count_of_not_done_tasks = len(self.list_of_NOT_DONE_task_Today_Bank)
         print(count_of_not_done_tasks)
 

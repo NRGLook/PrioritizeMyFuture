@@ -99,15 +99,17 @@ class RegisteredUser(User):
             if user_input == '7':
                 self.show_not_done_task(self)
             if user_input == '8':
-                self.burn_today(self)
-            if user_input == '9':
-                self.transfer_to_future(self)
-            if user_input == '10':
                 self.calculate_statistic_for_not_done_task()
-            if user_input == '11':
+            if user_input == '9':
                 self.calculate_statistic_for_done_task()
-            if user_input == '12':
+            if user_input == '10':
                 sys.exit()
+            """
+            if user_input == '11':
+                self.burn_today(self)
+            if user_input == '12':
+                self.transfer_to_future(self)
+            """
 
     def add_task(self, task_for_ToDoList):
         single_task = self.task_for_ToDoList.create_list()
@@ -151,6 +153,7 @@ class RegisteredUser(User):
     def calculate_statistic_for_done_task(self):
         self.bank_future.calculate_statistic_for_task()
 
+    """
     def burn_today(self, task_for_ToDoList):
         y_o_burn = self.bank.volume - sum([task.cost_name for task in self.tasks])
         self.bank.set_y_o(self.bank.y_o + y_o_burn)
@@ -159,8 +162,7 @@ class RegisteredUser(User):
     def transfer_to_future(self, task_for_ToDoList):
         y_o_transfer = sum([task.cost_name for task in self.tasks])
         self.bank.change_y_o(y_o_transfer)
-
-    """
+    
     def add_task(self, task_for_ToDoList):
         print(f"Task was added to {self.username} file")
         single_task = self.task_for_ToDoList.create_list()
@@ -179,3 +181,4 @@ class RegisteredUser(User):
             for task in data:
                 file.write(task + "\n")
     """
+
