@@ -182,4 +182,3 @@ class RegisteredUser(User):
             for task in data:
                 file.write(task + "\n")
     """
-
