@@ -140,7 +140,7 @@ class RegisteredUser(User):
             print(all_task)
 
     def show_done_task(self, task_for_ToDoList):
-        self.task_for_ToDoList.show_done_task(self.task_for_ToDoList)
+        self.task_for_ToDoList.show_done_task()
 
     def show_not_done_task(self, task_for_ToDoList):
         self.task_for_ToDoList.show_not_done_task()
