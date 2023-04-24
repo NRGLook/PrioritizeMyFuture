@@ -11,6 +11,7 @@ from src.BankFuture import BankFuture
 from src.ItemsShop import ItemsShop
 from src.ToDoList import ToDoList
 
+
 class User:
     def __init__(self):
         self.username = ''

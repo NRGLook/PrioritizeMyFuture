@@ -11,6 +11,6 @@ class BankFuture(Bank, ABC):
         self.list_of_DONE_tasks_Future_Bank = []
 
     def calculate_statistic_for_task(self):
-        self.list_of_DONE_tasks_Future_Bank = self.task_for_ToDoList.get_list_of_NOTDONE_task()
+        self.list_of_DONE_tasks_Future_Bank = self.task_for_ToDoList.show_done_task()
         count_of_not_done_tasks = len(self.list_of_DONE_tasks_Future_Bank)
         print(count_of_not_done_tasks)

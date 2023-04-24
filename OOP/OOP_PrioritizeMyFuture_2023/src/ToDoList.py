@@ -42,16 +42,4 @@ class ToDoList(Task):
             print("There is no DONE tasks yet!")
         return self.list_of_DONE_task
 
-    def set_list_of_DONE_task(self, list_of_DONE_task):
-        self.list_of_DONE_task = list_of_DONE_task
-
-    def get_list_of_DONE_task(self):
-        return self.list_of_DONE_task
-
-    def set_list_of_NOTDONE_task(self, list_of_NOTDONE_task):
-        self.list_of_NOTDONE_task = list_of_NOTDONE_task
-
-    def get_list_of_NOTDONE_task(self):
-        return self.list_of_NOTDONE_task
-
 
