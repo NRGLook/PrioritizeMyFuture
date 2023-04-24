@@ -1,10 +1,8 @@
-from abc import ABC
-
 from src.Bank import Bank
 from src.ToDoList import ToDoList
 
 
-class TodayBank(Bank, ABC):
+class TodayBank(Bank):
     def __init__(self):
         super().__init__()
         self.task_for_ToDoList = ToDoList()
