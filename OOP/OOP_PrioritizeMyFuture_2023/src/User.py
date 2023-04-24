@@ -4,6 +4,7 @@ import json
 import datetime
 
 import var.Constants
+import Setup
 
 from passlib.hash import pbkdf2_sha256
 from src.TodayBank import TodayBank
@@ -116,14 +117,20 @@ class RegisteredUser(User):
         single_task = self.task_for_ToDoList.create_list()
         self.task_for_ToDoList.add_task_for_single_list(single_task)
         # print(f"Task was added to {self.username} file")
+        # serialization
+        # setup.DataSerializerDeserializer.JSON_dump()
         with open(f"{self.username}.json", "w") as file:
-            json.dump(self.task_for_ToDoList.list_of_ALL_task, file)
+            # serialization
+            Setup.DataSerializerDeserializer.JSON_dump(self.task_for_ToDoList.list_of_ALL_task, file)
+            # json.dump(self.task_for_ToDoList.list_of_ALL_task, file)
 
     def remove_task(self, task_for_ToDoList):
         operation = int(input("Enter task that are you going to remove:  "))
         self.task_for_ToDoList.remove_task(operation)
         with open(f"{self.username}.json", "w") as file:
-            json.dump(self.task_for_ToDoList.list_of_ALL_task, file)
+            # serialization
+            Setup.DataSerializerDeserializer.JSON_dump(self.task_for_ToDoList.list_of_ALL_task, file)
+            # json.dump(self.task_for_ToDoList.list_of_ALL_task, file)
 
     def update_task(self, task_for_ToDoList):
         operation = int(input("Enter number of task that are you going to update:  "))
@@ -131,7 +138,9 @@ class RegisteredUser(User):
         new_parameter = input("Enter new field: ")
         self.task_for_ToDoList.update_task(operation, choose_operation, new_parameter)
         with open(f"{self.username}.json", "w") as file:
-            json.dump(self.task_for_ToDoList.list_of_ALL_task, file)
+            # serialization
+            Setup.DataSerializerDeserializer.JSON_dump(self.task_for_ToDoList.list_of_ALL_task, file)
+            # json.dump(self.task_for_ToDoList.list_of_ALL_task, file)
 
     def show_specific_task(self, task_for_ToDoList):
         operation = int(input("Enter number of task: "))
@@ -139,7 +148,9 @@ class RegisteredUser(User):
 
     def show_all_tasks(self, task_for_ToDoList):
         with open(f"{self.username}.json", "r") as file:
-            all_task = json.load(file)
+            # deserialization
+            all_task = Setup.DataSerializerDeserializer.JSON_load(self.task_for_ToDoList.list_of_ALL_task, file)
+            # all_task = json.load(file)
             print(all_task)
 
     def show_done_task(self, task_for_ToDoList):
