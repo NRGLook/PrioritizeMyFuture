@@ -10,7 +10,9 @@ OPTIONS_TODO = """
             7 - show_not_done_task
             8 - burn today 
             9 - transfer_to_future
-            10 - exit
+            10 - calculate_statistic_for_not_done_task
+            11 - calculate_statistic_for_done_task
+            12 - exit
             """
 
 OPTIONS_FOR_SINGLE_TASK = """

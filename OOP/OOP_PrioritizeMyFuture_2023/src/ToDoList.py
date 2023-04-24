@@ -24,33 +24,19 @@ class ToDoList(Task):
     def show_specific_task(self, operation):
         print("Task what you choose: ", self.list_of_ALL_task[operation - 1])
 
-    def show_done_task(self, task_for_ToDoList, task):
-        list = [Task.create_list(task_for_ToDoList)]
-        for list in self.list_of_ALL_task:
-            if list[3] == "Not Done":
-                print(list[0], "is", list[3])
-        """
-        iterable_value = len(self.list_of_ALL_task) - 1
-        help_value = 0
-        hello = 0
-        for iterable_value, self.status in self.list_of_ALL_task:
-            if self.list_of_ALL_task[help_value][3] == "Done":
-                hello += 1
-            help_value += 1
-        while True:
-            if self.list_of_ALL_task[help_value][3] == "Done":
-                self.list_of_DONE_task.append(task_for_ToDoList)
-                print(self.list_of_DONE_task)
-            else:
-                print("There is no tasks")
-                break
-        """
+    def show_not_done_task(self):
+        for task in self.list_of_ALL_task:
+            if task[3] == "Not Done":
+                print(task[0], "is", task[3])
+                self.list_of_NOTDONE_task.append(list)
+        return self.list_of_NOTDONE_task
 
-    def show_not_done_task(self, task_for_ToDoList):
-        while True:
-            if self.list_of_ALL_task[3] == "Not Done":
-                self.list_of_DONE_task.append(task_for_ToDoList)
-                print(self.list_of_NOTDONE_task)
-            else:
-                print("There is no tasks")
-                break
+    def get_list_of_NOTDONE_task(self):
+        return self.list_of_NOTDONE_task
+
+    def show_done_task(self, task_for_ToDoList):
+        list = []
+        for list in self.list_of_ALL_task:
+            if list[3] == "Done":
+                print(list[0], "is", list[3])
+

@@ -7,6 +7,8 @@ import var.Constants
 from passlib.hash import pbkdf2_sha256
 from src.ToDoList import ToDoList
 from src.ItemsShop import ItemsShop
+from src.TodayBank import TodayBank
+from src.BankFuture import BankFuture
 
 
 class User:
@@ -60,6 +62,8 @@ class RegisteredUser(User):
         super().__init__()
         self.username = username
         self.task_for_ToDoList = ToDoList()
+        self.bank_today = TodayBank()
+        self.bank_future = BankFuture()
         self.minutes_left_in_day(self)
         self.response()
         # circle dependence -> self.bank = Bank()
@@ -74,7 +78,7 @@ class RegisteredUser(User):
 
     @staticmethod
     def enter_to_item_shop(self):
-        ItemsShop.buy_items()
+        ItemsShop.buy_items(self)
 
     def response(self):
         print(var.Constants.OPTIONS_TODO)
@@ -99,6 +103,10 @@ class RegisteredUser(User):
             if user_input == '9':
                 self.transfer_to_future(self)
             if user_input == '10':
+                self.calculate_statistic_for_not_done_task()
+            if user_input == '11':
+                self.calculate_statistic_for_done_task()
+            if user_input == '12':
                 sys.exit()
 
     def add_task(self, task_for_ToDoList):
@@ -116,7 +124,7 @@ class RegisteredUser(User):
 
     def update_task(self, task_for_ToDoList):
         operation = int(input("Enter number of task that are you going to update:  "))
-        choose_operation = int(input("Enter the field in task to update:\n1-name\n2-cost\n3-category\n"))
+        choose_operation = int(input("Enter the field in task to update:\n1-name\n2-cost\n3-category\n4-status\n"))
         new_parameter = input("Enter new field: ")
         self.task_for_ToDoList.update_task(operation, choose_operation, new_parameter)
         with open(f"{self.username}.json", "w") as file:
@@ -135,7 +143,13 @@ class RegisteredUser(User):
         self.task_for_ToDoList.show_done_task(self.task_for_ToDoList)
 
     def show_not_done_task(self, task_for_ToDoList):
-        self.task_for_ToDoList.show_not_done_task(self.task_for_ToDoList)
+        self.task_for_ToDoList.show_not_done_task()
+
+    def calculate_statistic_for_not_done_task(self):
+        self.bank_today.calculate_statistic_for_task()
+
+    def calculate_statistic_for_done_task(self):
+        self.bank_future.calculate_statistic_for_task()
 
     def burn_today(self, task_for_ToDoList):
         y_o_burn = self.bank.volume - sum([task.cost_name for task in self.tasks])
