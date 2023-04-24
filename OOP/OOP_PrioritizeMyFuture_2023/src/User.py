@@ -1,10 +1,9 @@
 import sqlite3
 import sys
-import json
 import datetime
 
 import var.Constants
-import Setup
+from mypythonlib import myfunctions
 
 from passlib.hash import pbkdf2_sha256
 from src.TodayBank import TodayBank
@@ -121,7 +120,7 @@ class RegisteredUser(User):
         # setup.DataSerializerDeserializer.JSON_dump()
         with open(f"{self.username}.json", "w") as file:
             # serialization
-            Setup.DataSerializerDeserializer.JSON_dump(self.task_for_ToDoList.list_of_ALL_task, file)
+            myfunctions.JSON_dump(self.task_for_ToDoList.list_of_ALL_task, file)
             # json.dump(self.task_for_ToDoList.list_of_ALL_task, file)
 
     def remove_task(self, task_for_ToDoList):
@@ -129,7 +128,7 @@ class RegisteredUser(User):
         self.task_for_ToDoList.remove_task(operation)
         with open(f"{self.username}.json", "w") as file:
             # serialization
-            Setup.DataSerializerDeserializer.JSON_dump(self.task_for_ToDoList.list_of_ALL_task, file)
+            myfunctions.JSON_dump(self.task_for_ToDoList.list_of_ALL_task, file)
             # json.dump(self.task_for_ToDoList.list_of_ALL_task, file)
 
     def update_task(self, task_for_ToDoList):
@@ -139,7 +138,7 @@ class RegisteredUser(User):
         self.task_for_ToDoList.update_task(operation, choose_operation, new_parameter)
         with open(f"{self.username}.json", "w") as file:
             # serialization
-            Setup.DataSerializerDeserializer.JSON_dump(self.task_for_ToDoList.list_of_ALL_task, file)
+            myfunctions.JSON_dump(self.task_for_ToDoList.list_of_ALL_task, file)
             # json.dump(self.task_for_ToDoList.list_of_ALL_task, file)
 
     def show_specific_task(self, task_for_ToDoList):
@@ -149,7 +148,7 @@ class RegisteredUser(User):
     def show_all_tasks(self, task_for_ToDoList):
         with open(f"{self.username}.json", "r") as file:
             # deserialization
-            all_task = Setup.DataSerializerDeserializer.JSON_load(self.task_for_ToDoList.list_of_ALL_task, file)
+            all_task = myfunctions.JSON_load(self.task_for_ToDoList.list_of_ALL_task, file)
             # all_task = json.load(file)
             print(all_task)
 
