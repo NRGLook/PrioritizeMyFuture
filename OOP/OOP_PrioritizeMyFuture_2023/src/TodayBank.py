@@ -1,13 +1,12 @@
 from abc import ABC
+
 from src.Bank import Bank
 from src.ToDoList import ToDoList
-from src.Task import Task
 
 
 class TodayBank(Bank, ABC):
     def __init__(self):
         super().__init__()
-        self.task = Task()
         self.task_for_ToDoList = ToDoList()
         self.list_of_NOT_DONE_task_Today_Bank = []
 

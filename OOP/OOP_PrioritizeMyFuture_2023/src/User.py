@@ -2,14 +2,14 @@ import sqlite3
 import sys
 import json
 import datetime
+
 import var.Constants
 
 from passlib.hash import pbkdf2_sha256
-from src.ToDoList import ToDoList
-from src.ItemsShop import ItemsShop
 from src.TodayBank import TodayBank
 from src.BankFuture import BankFuture
-
+from src.ItemsShop import ItemsShop
+from src.ToDoList import ToDoList
 
 class User:
     def __init__(self):
