@@ -1,5 +1,6 @@
 import json
 import tomllib
+import xml
 
 
 def JSON_dump(self, file):
@@ -21,10 +22,14 @@ def JSON_loads(self, file):
 
 
 @staticmethod
-def XML_load(self, file):
+def TOML_load(self, file):
     return tomllib.load(file)
 
 
 @staticmethod
-def XML_loads(self, file):
+def TOML_loads(self, file):
     return tomllib.loads(file)
+
+
+def XML_PARSERS(self):
+    return xml.parsers
