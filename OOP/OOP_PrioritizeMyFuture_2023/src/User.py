@@ -1,11 +1,11 @@
 import sqlite3
 import sys
 import datetime
+from passlib.hash import pbkdf2_sha256
 
 import var.Constants
 from mypythonlib import myfunctions
 
-from passlib.hash import pbkdf2_sha256
 from src.TodayBank import TodayBank
 from src.BankFuture import BankFuture
 from src.ItemsShop import ItemsShop

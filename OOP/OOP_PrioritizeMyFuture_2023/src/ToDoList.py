@@ -2,12 +2,14 @@ from src.Task import Task
 
 
 class ToDoList(Task):
+
+    list_of_ALL_task = []
+    list_of_DONE_task = []
+    list_of_NOTDONE_task = []
+
     def __init__(self):
         super().__init__()
         task = Task()
-        self.list_of_ALL_task = []
-        self.list_of_DONE_task = []
-        self.list_of_NOTDONE_task = []
 
     def add_task_for_single_list(self, task):
         self.list_of_ALL_task.append(task)
