@@ -184,9 +184,9 @@ class RegisteredUser(User):
             except json.decoder.JSONDecodeError:
                 data = []
             data.extend(self.task_for_ToDoList.list_of_ALL_task)
-            # Удаление дубликатов в списке задач
+            # Deleting duplicates in task list
             data = list(set([json.dumps(i) for i in data]))
-            # Запись списка задач без дубликатов в файл
+            # Write to file without duplicates
             file.seek(0)
             file.truncate()
             for task in data:
