@@ -1,61 +1,33 @@
 import sqlite3
 import sys
-import json
 import datetime
-
-import var.Constants
-
 from passlib.hash import pbkdf2_sha256
-from src.TodayBank import TodayBank
+
+from mypythonlib import myfunctions
+
+from src.BankToday import TodayBank
 from src.BankFuture import BankFuture
 from src.ItemsShop import ItemsShop
 from src.ToDoList import ToDoList
+from src.ToDoListView import ToDoListView
 
 
 class User:
     def __init__(self):
-        self.username = ''
-        self._password = ''
-
-    def registration(self):
-
-        print(var.Constants.GREETING_TEXT)
-        conn = sqlite3.connect('users.db')
-        c = conn.cursor()
-
-        c.execute('''CREATE TABLE IF NOT EXISTS users
-                     (username TEXT PRIMARY KEY, password TEXT)''')
-
-        def verify_password(password, hashed):
-            return pbkdf2_sha256.verify(password, hashed)
-
-        self.username = input('Enter username: ')
-        self._password = input('Enter password: ')
-
-        c.execute('SELECT password FROM users WHERE username=?', (self.username,))
-        result = c.fetchone()
-
-        if result:
-            if verify_password(self._password, result[0]):
-                print('Authorization is success!')
-                with open(f"{self.username}.json", "a") as tasks_file:
-                    pass
-                user = RegisteredUser(self.username)
-            else:
-                print('Incorrect password! Try again!')
-        else:
-            hashed_password = pbkdf2_sha256.hash(self._password)
-            c.execute('INSERT INTO users VALUES (?, ?)', (self.username, hashed_password))
-            with open(f"{self.username}.json", "a") as tasks_file:
-                pass
-            print('Registration is success!')
-            user = RegisteredUser(self.username)
-
-        conn.commit()
-        conn.close()
+        self.username = ""
+        self._password = ""
 
     def get_username(self):
         return self.username
+
+    def set_username(self, username):
+        self.username = username
+
+    def get_password(self):
+        return self._password
+
+    def set_password(self, _password):
+        self._password = _password
 
 
 class RegisteredUser(User):
@@ -63,10 +35,10 @@ class RegisteredUser(User):
         super().__init__()
         self.username = username
         self.task_for_ToDoList = ToDoList()
+        self.task_for_view = ToDoListView()
         self.bank_today = TodayBank()
         self.bank_future = BankFuture()
         self.minutes_left_in_day(self)
-        self.response()
         # circle dependence -> self.bank = Bank()
 
     @staticmethod
@@ -81,72 +53,49 @@ class RegisteredUser(User):
     def enter_to_item_shop(self):
         ItemsShop.buy_items(self)
 
-    def response(self):
-        print(var.Constants.OPTIONS_TODO)
-        while True:
-            user_input = input('Choose command: ')
-            if user_input == '1':
-                self.add_task(self)
-            if user_input == '2':
-                self.remove_task(self)
-            if user_input == '3':
-                self.update_task(self)
-            if user_input == '4':
-                self.show_all_tasks(self)
-            if user_input == '5':
-                self.show_specific_task(self)
-            if user_input == '6':
-                self.show_done_task(self)
-            if user_input == '7':
-                self.show_not_done_task(self)
-            if user_input == '8':
-                self.calculate_statistic_for_not_done_task()
-            if user_input == '9':
-                self.calculate_statistic_for_done_task()
-            if user_input == '10':
-                sys.exit()
-            """
-            if user_input == '11':
-                self.burn_today(self)
-            if user_input == '12':
-                self.transfer_to_future(self)
-            """
-
-    def add_task(self, task_for_ToDoList):
+    def add_task(self):
         single_task = self.task_for_ToDoList.create_list()
         self.task_for_ToDoList.add_task_for_single_list(single_task)
         # print(f"Task was added to {self.username} file")
+        # serialization
+        # setup.DataSerializerDeserializer.JSON_dump()
         with open(f"{self.username}.json", "w") as file:
-            json.dump(self.task_for_ToDoList.list_of_ALL_task, file)
+            # serialization
+            myfunctions.JSON.JSON_dump(self.task_for_ToDoList.list_of_ALL_task, file)
+            # json.dump(self.task_for_ToDoList.list_of_ALL_task, file)
 
-    def remove_task(self, task_for_ToDoList):
-        operation = int(input("Enter task that are you going to remove:  "))
+    def remove_task(self, operation):
         self.task_for_ToDoList.remove_task(operation)
         with open(f"{self.username}.json", "w") as file:
-            json.dump(self.task_for_ToDoList.list_of_ALL_task, file)
+            # serialization
+            myfunctions.JSON.JSON_dump(self.task_for_ToDoList.list_of_ALL_task, file)
+            # json.dump(self.task_for_ToDoList.list_of_ALL_task, file)
 
-    def update_task(self, task_for_ToDoList):
-        operation = int(input("Enter number of task that are you going to update:  "))
-        choose_operation = int(input("Enter the field in task to update:\n1-name\n2-cost\n3-category\n4-status\n"))
-        new_parameter = input("Enter new field: ")
+    def update_task(self, operation, choose_operation, new_parameter):
+        operation = operation
+        choose_operation = choose_operation
+        new_parameter = new_parameter
         self.task_for_ToDoList.update_task(operation, choose_operation, new_parameter)
         with open(f"{self.username}.json", "w") as file:
-            json.dump(self.task_for_ToDoList.list_of_ALL_task, file)
+            # serialization
+            myfunctions.JSON.JSON_dump(self.task_for_ToDoList.list_of_ALL_task, file)
+            # json.dump(self.task_for_ToDoList.list_of_ALL_task, file)
 
-    def show_specific_task(self, task_for_ToDoList):
-        operation = int(input("Enter number of task: "))
-        self.task_for_ToDoList.show_specific_task(operation)
+    def show_specific_task(self, operation):
+        self.task_for_view.show_specific_task(operation)
 
-    def show_all_tasks(self, task_for_ToDoList):
+    def show_all_tasks(self):
         with open(f"{self.username}.json", "r") as file:
-            all_task = json.load(file)
+            # deserialization
+            all_task = myfunctions.JSON.JSON_load(self.task_for_view.list_of_ALL_task, file)
+            # all_task = json.load(file)
             print(all_task)
 
-    def show_done_task(self, task_for_ToDoList):
-        self.task_for_ToDoList.show_done_task()
+    def show_done_task(self):
+        self.task_for_view.show_done_task()
 
-    def show_not_done_task(self, task_for_ToDoList):
-        self.task_for_ToDoList.show_not_done_task()
+    def show_not_done_task(self):
+        self.task_for_view.show_not_done_task()
 
     def calculate_statistic_for_not_done_task(self):
         self.bank_today.calculate_statistic_for_task()
@@ -174,9 +123,9 @@ class RegisteredUser(User):
             except json.decoder.JSONDecodeError:
                 data = []
             data.extend(self.task_for_ToDoList.list_of_ALL_task)
-            # Удаление дубликатов в списке задач
+            # Deleting duplicates in task list
             data = list(set([json.dumps(i) for i in data]))
-            # Запись списка задач без дубликатов в файл
+            # Write to file without duplicates
             file.seek(0)
             file.truncate()
             for task in data:

@@ -1,5 +1,6 @@
-from src.User import User
+from Application import Application
+
 
 if __name__ == "__main__":
-    user = User()
-    user.registration()
+    app = Application()
+    app.run()
