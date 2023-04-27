@@ -3,29 +3,28 @@ import tomllib
 import xml
 
 
-def JSON_dump(self, file):
-    return json.dump(self, file)
+class JSON:
+    def JSON_dump(self, file):
+        return json.dump(self, file)
+
+    def JSON_dumps(self):
+        return json.dumps(self)
+
+    def JSON_load(self, file):
+        return json.load(file)
+
+    def JSON_loads(self, file):
+        return json.loads(file)
 
 
-def JSON_dumps(self):
-    return json.dumps(self)
+class TOML:
+    def TOML_load(self, file):
+        return tomllib.load(file)
+
+    def TOML_loads(self, file):
+        return tomllib.loads(file)
 
 
-def JSON_load(self, file):
-    return json.load(file)
-
-
-def JSON_loads(self, file):
-    return json.loads(file)
-
-
-def TOML_load(self, file):
-    return tomllib.load(file)
-
-
-def TOML_loads(self, file):
-    return tomllib.loads(file)
-
-
-def XML_PARSERS(self):
-    return xml.parsers
+class XML:
+    def XML_PARSERS(self):
+        return xml.parsers

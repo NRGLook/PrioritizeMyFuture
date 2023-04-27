@@ -1,11 +1,11 @@
 from src.Bank import Bank
-from src.ToDoList import ToDoList
+from src.ToDoListView import ToDoListView
 
 
 class BankFuture(Bank):
     def __init__(self):
         super().__init__()
-        self.task_for_ToDoList = ToDoList()
+        self.task_for_ToDoList = ToDoListView()
         self.list_of_DONE_tasks_Future_Bank = []
 
     def calculate_statistic_for_task(self):
